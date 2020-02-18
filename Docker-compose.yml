@@ -1,0 +1,20 @@
+version: '3'
+services: # to tak na prawde kontenery
+  frontend: # nazwa kontenera
+    restart: on-failure #polityka restartow kontenera
+    build:
+      context: .
+      dockerfile: Dockerfile.dev     # context i dockerfilr uzywamy jak nie mamy domyslego dockerfile 
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev     # context i dockerfilr uzywamy jak nie mamy domyslego dockerfile
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
